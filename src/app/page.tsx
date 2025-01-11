@@ -36,7 +36,7 @@ const projects = [
   {
     title: 'E-commerce Platform',
     description: 'A full-stack e-commerce solution built with Next.js and Express.js',
-    image: '/Images/1797500.png',
+    image: '1797500.png',
     tags: ['Next.js', 'Express.js', 'PostgreSQL'],
     github: 'https://github.com/yourusername/ecommerce-platform',
     live: 'https://ecommerce-platform-demo.vercel.app',
