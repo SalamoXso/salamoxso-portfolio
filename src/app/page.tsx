@@ -1,11 +1,12 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight, Code, Server, Shield } from 'lucide-react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import ThreeDCard from './components/ThreeDCard'; // Import the ThreeDCard component
+import ScrollIndicator from './components/ScrollIndicator'; // Import the ScrollIndicator component
 
 // Animation variants
 const fadeInUp = {
@@ -18,29 +19,35 @@ const stagger = {
 };
 
 const skillIcons = {
-  'Frontend': <Code className="w-6 h-6 mb-2" />,
-  'Backend': <Server className="w-6 h-6 mb-2" />,
-  'Cybersecurity': <Shield className="w-6 h-6 mb-2" />,
+  Frontend: <Code className="w-6 h-6 mb-2" />,
+  Backend: <Server className="w-6 h-6 mb-2" />,
+  Cybersecurity: <Shield className="w-6 h-6 mb-2" />,
+  Programming: <Code className="w-6 h-6 mb-2" />, // Added icon for Programming
 };
 
 const skills = [
   { category: 'Frontend', items: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript'] },
-  { category: 'Backend', items: ['Node.js', 'Express.js', 'Python', 'PostgreSQL'] },
+  { category: 'Backend', items: ['Node.js', 'Express.js', 'Python', 'PostgreSQL', 'API Integration'] },
   { category: 'Cybersecurity', items: ['Web App Pentesting', 'Network Security', 'Vulnerability Assessment'] },
+  { category: 'Programming', items: ['Python Programming', 'JavaScript', 'TypeScript'] }, // Added Programming category
 ];
 
 const projects = [
-  { 
-    title: 'E-commerce Platform', 
+  {
+    title: 'E-commerce Platform',
     description: 'A full-stack e-commerce solution built with Next.js and Express.js',
-    image: '/placeholder.svg?height=200&width=300',
-    tags: ['Next.js', 'Express.js', 'PostgreSQL']
+    image: '/Images/1797500.png',
+    tags: ['Next.js', 'Express.js', 'PostgreSQL'],
+    github: 'https://github.com/yourusername/ecommerce-platform',
+    live: 'https://ecommerce-platform-demo.vercel.app',
   },
-  { 
-    title: 'Cybersecurity Dashboard', 
+  {
+    title: 'Cybersecurity Dashboard',
     description: 'Real-time security monitoring dashboard using React and Node.js',
     image: '/placeholder.svg?height=200&width=300',
-    tags: ['React', 'Node.js', 'WebSockets']
+    tags: ['React', 'Node.js', 'WebSockets'],
+    github: 'https://github.com/yourusername/cybersecurity-dashboard',
+    live: 'https://cybersecurity-dashboard-demo.vercel.app',
   },
 ];
 
@@ -56,7 +63,10 @@ export default function Home() {
   }, [controls, inView]);
 
   return (
-    <div className="space-y-20">
+    <div className="space-y-20 relative pl-24"> {/* Add padding to the left */}
+      {/* Scroll Indicator */}
+      <ScrollIndicator />
+
       {/* Hero Section */}
       <motion.section
         className="text-center space-y-6"
@@ -145,38 +155,16 @@ export default function Home() {
         <motion.h2 className="text-3xl font-semibold mb-8 text-center" variants={fadeInUp}>
           Featured Projects
         </motion.h2>
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-12"
-          variants={stagger}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {projects.map((project) => (
-            <motion.div
+            <ThreeDCard
               key={project.title}
-              className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
-              variants={fadeInUp}
-              whileHover={{ y: -5 }}
-            >
-              <Image
-                src={project.image}
-                alt={project.title}
-                width={300}
-                height={200}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-2xl font-semibold mb-2">{project.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+              title={project.title}
+              description={project.description}
+              tags={project.tags}
+            />
           ))}
-        </motion.div>
+        </div>
         <motion.div
           className="mt-12 text-center"
           variants={fadeInUp}
@@ -192,4 +180,3 @@ export default function Home() {
     </div>
   );
 }
-
